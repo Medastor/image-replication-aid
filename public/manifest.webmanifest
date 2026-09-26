@@ -1,0 +1,26 @@
+{
+  "name": "Hierarchy",
+  "short_name": "Hierarchy",
+  "description": "Folders, projects and items. A quiet personal structure.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#151a1f",
+  "theme_color": "#151a1f",
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

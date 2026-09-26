@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as FFolderIdRouteImport } from './routes/f.$folderId'
+import { Route as FFolderIdPProjectIdRouteImport } from './routes/f.$folderId.p.$projectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FFolderIdRoute = FFolderIdRouteImport.update({
+  id: '/f/$folderId',
+  path: '/f/$folderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FFolderIdPProjectIdRoute = FFolderIdPProjectIdRouteImport.update({
+  id: '/p/$projectId',
+  path: '/p/$projectId',
+  getParentRoute: () => FFolderIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/f/$folderId': typeof FFolderIdRouteWithChildren
+  '/f/$folderId/p/$projectId': typeof FFolderIdPProjectIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/f/$folderId': typeof FFolderIdRouteWithChildren
+  '/f/$folderId/p/$projectId': typeof FFolderIdPProjectIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/f/$folderId': typeof FFolderIdRouteWithChildren
+  '/f/$folderId/p/$projectId': typeof FFolderIdPProjectIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/search' | '/settings' | '/f/$folderId' | '/f/$folderId/p/$projectId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    '/' | '/search' | '/settings' | '/f/$folderId' | '/f/$folderId/p/$projectId'
+  id:
+    | '__root__'
+    | '/'
+    | '/search'
+    | '/settings'
+    | '/f/$folderId'
+    | '/f/$folderId/p/$projectId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SearchRoute: typeof SearchRoute
+  SettingsRoute: typeof SettingsRoute
+  FFolderIdRoute: typeof FFolderIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/f/$folderId': {
+      id: '/f/$folderId'
+      path: '/f/$folderId'
+      fullPath: '/f/$folderId'
+      preLoaderRoute: typeof FFolderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/f/$folderId/p/$projectId': {
+      id: '/f/$folderId/p/$projectId'
+      path: '/p/$projectId'
+      fullPath: '/f/$folderId/p/$projectId'
+      preLoaderRoute: typeof FFolderIdPProjectIdRouteImport
+      parentRoute: typeof FFolderIdRoute
+    }
   }
 }
 
+interface FFolderIdRouteChildren {
+  FFolderIdPProjectIdRoute: typeof FFolderIdPProjectIdRoute
+}
+
+const FFolderIdRouteChildren: FFolderIdRouteChildren = {
+  FFolderIdPProjectIdRoute: FFolderIdPProjectIdRoute,
+}
+
+const FFolderIdRouteWithChildren = FFolderIdRoute._addFileChildren(
+  FFolderIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SearchRoute: SearchRoute,
+  SettingsRoute: SettingsRoute,
+  FFolderIdRoute: FFolderIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
