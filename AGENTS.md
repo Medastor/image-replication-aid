@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Data
+- App state (folders/projects/items) lives in `src/lib/store.tsx` (React context + localStorage key `hierarchy.v1`) — first version is local-only, shaped so sync can be added later.
