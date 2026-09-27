@@ -8,9 +8,9 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
-      { title: "Search — Hierarchy" },
+      { title: "Search — GestionAdri" },
       { name: "description", content: "Search across folders, projects and items." },
-      { property: "og:title", content: "Search — Hierarchy" },
+      { property: "og:title", content: "Search — GestionAdri" },
       { property: "og:description", content: "Search across folders, projects and items." },
     ],
   }),

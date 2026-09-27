@@ -12,9 +12,9 @@ import { byOrder, useStore, type Item } from "@/lib/store";
 export const Route = createFileRoute("/f/$folderId/p/$projectId")({
   head: () => ({
     meta: [
-      { title: "Project — Hierarchy" },
+      { title: "Project — GestionAdri" },
       { name: "description", content: "Items inside this project." },
-      { property: "og:title", content: "Project — Hierarchy" },
+      { property: "og:title", content: "Project — GestionAdri" },
       { property: "og:description", content: "Items inside this project." },
     ],
   }),
