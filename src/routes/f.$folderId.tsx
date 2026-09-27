@@ -32,6 +32,9 @@ function FolderDetail() {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [deletingProject, setDeletingProject] = useState<Project | null>(null);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
+  // Which parent a new item should be created under: null = direct in the folder,
+  // otherwise the id of a specific project. Only meaningful while creating (not editing).
+  const [itemProjectId, setItemProjectId] = useState<string | null>(null);
 
   if (!folder) {
     return (
@@ -148,7 +151,7 @@ function FolderDetail() {
                     )}
                   </div>
 
-                  {!p.collapsed && items.length > 0 ? (
+                  {!p.collapsed ? (
                     <ul className="pb-2">
                       {items.map((it, ii) => (
                         <ItemRow
@@ -163,6 +166,21 @@ function FolderDetail() {
                           onEdit={() => setEditingItem(it)}
                         />
                       ))}
+                      {!reorder ? (
+                        <li className="pl-6">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setItemProjectId(p.id);
+                              setCreating("item");
+                            }}
+                            className="flex min-h-10 items-center gap-1.5 py-2 text-[0.85rem] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring"
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                            Add item
+                          </button>
+                        </li>
+                      ) : null}
                     </ul>
                   ) : null}
                 </li>
@@ -197,7 +215,13 @@ function FolderDetail() {
           <Button variant="ghost" onClick={() => setCreating("project")}>
             + New project
           </Button>
-          <Button variant="ghost" onClick={() => setCreating("item")}>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setItemProjectId(null);
+              setCreating("item");
+            }}
+          >
             + New item
           </Button>
         </div>
@@ -234,10 +258,11 @@ function FolderDetail() {
         onClose={() => {
           setCreating(null);
           setEditingItem(null);
+          setItemProjectId(null);
         }}
         onSubmit={(name) => {
           if (editingItem) store.updateItem(editingItem.id, { name });
-          else store.addItem(folder.id, null, name);
+          else store.addItem(folder.id, itemProjectId, name);
         }}
         onDelete={
           editingItem
