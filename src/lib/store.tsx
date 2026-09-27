@@ -135,7 +135,9 @@ type Ctx = {
   moveItem: (id: string, dir: -1 | 1) => void;
 };
 
-const StoreContext = createContext<Ctx | null>(null);
+// Keep a single context instance across hot reloads / duplicate module URLs.
+const g = globalThis as unknown as { __hierarchyStoreCtx?: import("react").Context<Ctx | null> };
+const StoreContext = (g.__hierarchyStoreCtx ??= createContext<Ctx | null>(null));
 
 function reindex<T extends { order: number }>(list: T[]): T[] {
   return list.map((x, i) => ({ ...x, order: i }));
