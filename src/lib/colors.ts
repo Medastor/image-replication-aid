@@ -16,7 +16,7 @@ export type ColorId = (typeof PALETTE)[number]["id"];
 export const DEFAULT_COLOR: ColorId = "neutral";
 
 export function colorValue(id: string): string {
-  return PALETTE.find((c) => c.id === id)?.value ?? PALETTE[PALETTE.length - 1].value;
+  return PALETTE.find((c) => c.id === id)?.value ?? "oklch(0.72 0.01 250)";
 }
 
 export function colorLabel(id: string): string {
