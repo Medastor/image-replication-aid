@@ -74,7 +74,7 @@ export function ItemForm({
   mode: "new" | "edit";
   onClose: () => void;
   onSubmit: (name: string) => void;
-  onDelete?: () => void;
+  onDelete?: (() => void) | undefined;
 }) {
   const [name, setName] = useState(initialName);
   const submit = () => {
