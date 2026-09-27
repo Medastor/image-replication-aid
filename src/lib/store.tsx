@@ -171,9 +171,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const target = idx + dir;
       if (idx < 0 || target < 0 || target >= group.length) return list;
       const next = [...group];
-      const tmp = next[idx];
-      next[idx] = next[target];
-      next[target] = tmp;
+      const a = next[idx] as T;
+      const b = next[target] as T;
+      next[idx] = b;
+      next[target] = a;
       const ordered = reindex(next);
       return list.map((x) => ordered.find((o) => o.id === x.id) ?? x);
     },

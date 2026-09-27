@@ -275,7 +275,7 @@ export function ProjectForm({
   project: Project | null;
   onClose: () => void;
   onSubmit: (name: string, color: ColorId) => void;
-  onDelete?: () => void;
+  onDelete?: (() => void) | undefined;
 }) {
   const [name, setName] = useState(project?.name ?? "");
   const [color, setColor] = useState<ColorId>(project?.color ?? DEFAULT_COLOR);
