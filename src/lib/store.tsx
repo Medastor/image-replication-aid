@@ -136,7 +136,7 @@ type Ctx = {
 };
 
 // Keep a single context instance across hot reloads / duplicate module URLs.
-const g = globalThis as unknown as { __hierarchyStoreCtx?: React.Context<Ctx | null> };
+const g = globalThis as unknown as { __hierarchyStoreCtx?: import("react").Context<Ctx | null> };
 const StoreContext = (g.__hierarchyStoreCtx ??= createContext<Ctx | null>(null));
 
 function reindex<T extends { order: number }>(list: T[]): T[] {
