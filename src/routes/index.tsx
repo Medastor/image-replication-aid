@@ -9,12 +9,12 @@ import { byOrder, useStore, type Folder } from "@/lib/store";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Folders — Hierarchy" },
+      { title: "Folders — GestionAdri" },
       {
         name: "description",
         content: "Your folders, projects and items in one quiet, dark, personal structure.",
       },
-      { property: "og:title", content: "Folders — Hierarchy" },
+      { property: "og:title", content: "Folders — GestionAdri" },
       {
         property: "og:description",
         content: "Your folders, projects and items in one quiet, dark, personal structure.",
